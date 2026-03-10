@@ -1,0 +1,65 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-13T11:21:07.456Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 3,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-2",
+        "summary": "Persist the uploaded spare-parts dataset and maintenance password across backend canister upgrades so that rebuilding/redeploying the same canister does not erase previously uploaded Excel data (subject to the existing 7-day retention logic).",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Add a client-side backup/restore flow so a user can recover previously imported spare-parts data even if the draft app expires and the backend no longer has the dataset: (1) automatically save the last successfully imported dataset (the parsed SparePart array) into browser storage, (2) expose UI actions to download a local backup file (JSON) and to restore from the saved backup by re-uploading it to the backend after unlocking with the maintenance password.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/lib/backup/sparePartsBackup.ts",
+          "frontend/src/hooks/useSparePartsData.ts",
+          "frontend/src/components/UploadCard.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/lib/backup/sparePartsBackup.ts",
+          "frontend/src/hooks/useSparePartsData.ts",
+          "frontend/src/components/UploadCard.tsx"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Provide personal-use (self-managed) code and run instructions in-repo, including how to run locally, deploy to the Internet Computer with dfx, and how data persistence/backup works (including limitations of draft expiry vs live deployments). All user-facing documentation must be in English.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/README.md"
+        ],
+        "matchedFiles": [
+          "frontend/README.md"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/README.md",
+    "frontend/src/components/UploadCard.tsx",
+    "frontend/src/hooks/useSparePartsData.ts",
+    "frontend/src/lib/backup/sparePartsBackup.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

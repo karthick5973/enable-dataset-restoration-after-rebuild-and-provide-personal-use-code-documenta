@@ -1,0 +1,43 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-add-a-client-side-backup-restore-flow-so-a-user-can-recover-previously-imported-spare-parts-data-even-if-the-draft-app-expires-and-the-backend-no-longer-has-the-dataset-1-automatically-save-the-last-successfully-imported-dataset-the-parsed-sparepart-array-into-browser-storage-2-expose-ui-actions-to-download-a-local-backup-file-json-and-to-restore-from-the-saved-backup-by-re-uploading-it-to-the-backend-after-unlocking-with-the-maintenance-password",
+      "featureTitle": "Add a client-side backup/restore flow so a user can recover previously imported spare-parts data even if the draft app expires and the backend no longer has the dataset: (1) automatically save the last successfully imported dataset (the parsed SparePart array) into browser storage, (2) expose UI actions to download a local backup file (JSON) and to restore from the saved backup by re-uploading it to the backend after unlocking with the maintenance password.",
+      "files": [
+        "frontend/src/components/UploadCard.tsx",
+        "frontend/src/hooks/useSparePartsData.ts",
+        "frontend/src/lib/backup/sparePartsBackup.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-provide-personal-use-self-managed-code-and-run-instructions-in-repo-including-how-to-run-locally-deploy-to-the-internet-computer-with-dfx-and-how-data-persistence-backup-works-including-limitations-of-draft-expiry-vs-live-deployments-all-user-facing-documentation-must-be-in-english",
+      "featureTitle": "Provide personal-use (self-managed) code and run instructions in-repo, including how to run locally, deploy to the Internet Computer with dfx, and how data persistence/backup works (including limitations of draft expiry vs live deployments). All user-facing documentation must be in English.",
+      "files": [
+        "frontend/README.md"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

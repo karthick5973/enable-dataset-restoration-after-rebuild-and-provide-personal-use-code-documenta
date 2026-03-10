@@ -1,0 +1,55 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Client-side dataset backup/restore + in-repo personal-use documentation",
+  "requirements": [
+    {
+      "id": "REQ-3",
+      "summary": "Add browser-storage backup plus download/restore actions to recover the last imported spare-parts dataset when backend data is missing/expired.",
+      "acceptanceCriteria": [
+        "After a successful import, the app stores a local backup of the imported spare parts in browser storage.",
+        "The Upload area provides a clearly labeled action to download the locally stored dataset as a JSON file.",
+        "If the backend returns zero parts but a local backup exists, the Upload area provides a clearly labeled action to restore/re-import the local backup to the backend (requires the existing unlock/password flow).",
+        "Restoring from backup updates the table and import status to match the restored dataset."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/backup/sparePartsBackup.ts",
+          "operation": "create",
+          "description": "Create small utilities for (a) persisting the last imported SparePart[] into browser storage (localStorage), (b) reading/validating it back, and (c) exporting/importing a JSON backup payload. Keep payload versioned and include minimal metadata (e.g., savedAt, recordCount) to support future compatibility."
+        },
+        {
+          "path": "frontend/src/hooks/useSparePartsData.ts",
+          "operation": "modify",
+          "description": "Persist a local backup after a successful backend import by hooking into the existing React Query import mutation lifecycle (use onSuccess with the mutation variables) and saving the imported SparePart[] via the new backup utility. Also invalidate/refetch remains as-is so the UI updates from backend state after restore/import."
+        },
+        {
+          "path": "frontend/src/components/UploadCard.tsx",
+          "operation": "modify",
+          "description": "Extend the Upload area UI to (1) show a clearly labeled “Download local backup (JSON)” action when a local backup exists, and (2) show a clearly labeled “Restore from local backup” action when backend currently has zero parts but a local backup exists. The restore action must use the existing maintenance unlock/password flow (disable or gate the restore button until unlocked) and then re-upload the locally saved SparePart[] via the existing import mutation. Use shadcn-ui components (e.g., Button, Alert, Card, Separator) for consistent styling and affordances. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Ensure the app’s empty/loaded states correctly reflect a restore: after a restore/import completes, the table renders with restored data and the import status updates (primarily via the existing query invalidation/refetch behavior). If needed, adjust the empty-state gating logic to avoid confusing transitions when a restore is initiated."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add English, personal-use run/deploy and data persistence/backup documentation in-repo.",
+      "acceptanceCriteria": [
+        "Repository contains clear English documentation explaining how to run the frontend locally and deploy the backend canister using dfx.",
+        "Documentation explains how spare-parts data is stored, how long it is retained, what happens on upgrade, and how to use the new backup/restore flow.",
+        "Documentation includes a brief section explaining Draft vs Live environments and the impact on data availability (at a practical, user-action level)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/README.md",
+          "operation": "create",
+          "description": "Add English personal-use documentation covering: local frontend run steps; deploying to the Internet Computer with dfx (high-level commands and expected outcomes); how spare-parts data is retained (7-day logic) and the practical meaning of backend upgrades; how the client-side backup works (localStorage + JSON download) and how to restore (requires unlock/password); and a Draft vs Live section describing data availability implications and recommended user actions (e.g., publish Live to avoid draft expiry)."
+        }
+      ]
+    }
+  ]
+}

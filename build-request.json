@@ -1,0 +1,76 @@
+{
+  "kind": "build_request",
+  "title": "Enable dataset restoration after rebuild and provide personal-use code documentation",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-2",
+      "text": "Persist the uploaded spare-parts dataset and maintenance password across backend canister upgrades so that rebuilding/redeploying the same canister does not erase previously uploaded Excel data (subject to the existing 7-day retention logic).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Rebuild now and get the uploaded previous excel data"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After a backend upgrade/redeploy (that preserves canister state), calling getAllSpareParts returns the same records as before the upgrade, unless the retention window has expired.",
+        "After a backend upgrade/redeploy, getRetentionStatus returns a consistent timeRemaining relative to the original uploadTimestamp (not reset by the upgrade).",
+        "After a backend upgrade/redeploy, verifyMaintenancePassword still validates against the current password (not reset to the default)."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add a client-side backup/restore flow so a user can recover previously imported spare-parts data even if the draft app expires and the backend no longer has the dataset: (1) automatically save the last successfully imported dataset (the parsed SparePart array) into browser storage, (2) expose UI actions to download a local backup file (JSON) and to restore from the saved backup by re-uploading it to the backend after unlocking with the maintenance password.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Rebuild now and get the uploaded previous excel data"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After a successful import, the app stores a local backup of the imported spare parts in browser storage.",
+        "The Upload area provides a clearly labeled action to download the locally stored dataset as a JSON file.",
+        "If the backend returns zero parts but a local backup exists, the Upload area provides a clearly labeled action to restore/re-import the local backup to the backend (requires the existing unlock/password flow).",
+        "Restoring from backup updates the table and import status to match the restored dataset."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Provide personal-use (self-managed) code and run instructions in-repo, including how to run locally, deploy to the Internet Computer with dfx, and how data persistence/backup works (including limitations of draft expiry vs live deployments). All user-facing documentation must be in English.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "I need this software coding for my self"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Repository contains clear English documentation explaining how to run the frontend locally and deploy the backend canister using dfx.",
+        "Documentation explains how spare-parts data is stored, how long it is retained, what happens on upgrade, and how to use the new backup/restore flow.",
+        "Documentation includes a brief section explaining Draft vs Live environments and the impact on data availability (at a practical, user-action level)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in backend/main.mo).",
+    "Only create backend/migration.mo if required by the existing-state upgrade policy; otherwise use Motoko upgrade hooks/stable variables within backend/main.mo.",
+    "Do not edit any paths listed as immutable: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui."
+  ],
+  "nonGoals": [
+    "Do not add third-party authentication providers beyond Internet Identity.",
+    "Do not add external databases or non-IC storage services for backups.",
+    "Do not implement real-time sync or multi-user collaboration."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

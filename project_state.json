@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "App needs rebuild capability with restoration of previously uploaded Excel data; user also requests having the software/code for personal use.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-add-a-client-side-backup-restore-flow-so-a-user-can-recover-previously-imported-spare-parts-data-even-if-the-draft-app-expires-and-the-backend-no-longer-has-the-dataset-1-automatically-save-the-last-successfully-imported-dataset-the-parsed-sparepart-array-into-browser-storage-2-expose-ui-actions-to-download-a-local-backup-file-json-and-to-restore-from-the-saved-backup-by-re-uploading-it-to-the-backend-after-unlocking-with-the-maintenance-password",
+      "title": "Add a client-side backup/restore flow so a user can recover previously imported spare-parts data even if the draft app expires and the backend no longer has the dataset: (1) automatically save the last successfully imported dataset (the parsed SparePart array) into browser storage, (2) expose UI actions to download a local backup file (JSON) and to restore from the saved backup by re-uploading it to the backend after unlocking with the maintenance password.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-personal-use-self-managed-code-and-run-instructions-in-repo-including-how-to-run-locally-deploy-to-the-internet-computer-with-dfx-and-how-data-persistence-backup-works-including-limitations-of-draft-expiry-vs-live-deployments-all-user-facing-documentation-must-be-in-english",
+      "title": "Provide personal-use (self-managed) code and run instructions in-repo, including how to run locally, deploy to the Internet Computer with dfx, and how data persistence/backup works (including limitations of draft expiry vs live deployments). All user-facing documentation must be in English.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Rebuild the expired draft app and restore/reuse previously uploaded Excel data",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Provide the software/codebase for the user to use personally (self-host/own the code)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Persist the uploaded spare-parts dataset and maintenance password across backend canister upgrades so that rebuilding/redeploying the same canister does not erase previously uploaded Excel data (subject to the existing 7-day retention logic).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Enable dataset restoration after rebuild and provide personal-use code documentation",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

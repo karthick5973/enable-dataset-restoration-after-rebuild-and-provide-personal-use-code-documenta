@@ -1,0 +1,58 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-13T11:21:07.454Z",
+  "summary": "REQ-3 (client-side backup/download/restore) and REQ-4 (English in-repo personal-use docs) appear to be implemented. REQ-2 (backend persistence across upgrades) is not clearly implemented because the dataset/password are stored in non-stable `var` fields and no explicit preupgrade/postupgrade stable-memory handling is shown; persistence through upgrade cannot be confirmed from the diff.",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Persist the uploaded spare-parts dataset and maintenance password across backend canister upgrades so that rebuilding/redeploying the same canister does not erase previously uploaded Excel data (subject to the existing 7-day retention logic).",
+      "reason": "The backend stores `datasetRecord` and `maintenancePassword` as ordinary `var` fields, and the diff does not show any `stable` variables or `system preupgrade/postupgrade` hooks that would preserve these values across an upgrade. A migration function is referenced, but without stable state it is not sufficient to meet the persistence acceptance criteria.",
+      "evidence": [
+        "backend/main.mo",
+        "backend/migration.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Publish-to-Live helper UI, slug validation utilities, and a Live smoke-test flow.",
+      "reason": "Not requested by REQ-2/REQ-3/REQ-4; these add new product features beyond dataset persistence, backup/restore, and documentation.",
+      "evidence": [
+        "frontend-file-summaries.txt (PublishLiveHelpModal.tsx, PublishLiveHelper.tsx, useLiveSmokeTest.ts, lib/publishLive/slug.ts)"
+      ]
+    },
+    {
+      "description": "Global redesign/theme changes (warm sand/stone palette) and Tailwind theme token extensions.",
+      "reason": "Not requested; requirements did not ask for visual redesign.",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/src/index.css, frontend/tailwind.config.js)"
+      ]
+    },
+    {
+      "description": "Search table enhancements (debounced filtering across nine fields, pagination to 100 results, responsive horizontal scroll).",
+      "reason": "Not requested; requirements focus on persistence, backup/restore, and docs.",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/src/components/SparePartsTable.tsx, frontend/src/hooks/useDebouncedValue.ts)"
+      ]
+    },
+    {
+      "description": "Added an empty placeholder hook file `useQueries.ts`.",
+      "reason": "Not requested and described as a placeholder for future expansion.",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/src/hooks/useQueries.ts)"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "frontend-file-summaries.txt",
+    "frontend/README.md",
+    "frontend/src/components/UploadCard.tsx",
+    "frontend/src/hooks/useSparePartsData.ts",
+    "frontend/src/lib/backup/sparePartsBackup.ts",
+    "project_state.json"
+  ]
+}
